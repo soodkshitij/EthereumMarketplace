@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Ethereum Marketplace</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/ethereum/foundation/master/src/favicon.ico">
+
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/app.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body style="background:url('http://blogs.lexisnexis.co.uk/dr/wp-content/uploads/sites/2/2016/07/51570977_xl.jpg')">
+    <div class="container-custom">
+    
+    	<!-- Header start -->
+    
+      	<div class="header row">
+      		<div class="col-md-4 logo">
+      			<a href="/">Eth MarketPlace</a>
+      		</div>
+      		<div class="col-md-4 right header-option">
+      			<a class="header-option-pad" href="/">Home</a>
+      			<a class="header-option-pad" href="/login">Login</a>
+      			<a class="header-option-pad" href="/buy">Buy</a>
+      			<a class="header-option-pad" href="/sell">Sell</a>
+      		</div>
+      	</div>
+      	
+      	<!-- Header ends -->
+      	
+      	
+      	<div class="ethereum-middle row" style="padding:80px;">
+      		<div class="powered-by">
+      			<h1 style="font-family:'NinjaTurtles-Regular';text-align:center;color:#3E6A8A;">Eth MarketPlace</h1>
+      			<h4 style="text-align:center;color:#3E6A8A;">Powered By</h4>
+      			<img style="height:450px;" src="https://www.ethereum.org/images/home-title.png">
+      		</div>
+      	</div>
+      	
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{ url_for('static', filename='js/web3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/truffle-contract.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+  </body>
+</html>

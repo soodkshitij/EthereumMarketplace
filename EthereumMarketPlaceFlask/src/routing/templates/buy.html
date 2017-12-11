@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Ethereum Marketplace</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/ethereum/foundation/master/src/favicon.ico">
+
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/app.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/side-bar.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/product.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    .list-group-item-heading{
+	    text-align: center;
+	    font-size: 20px;
+	    font-weight: bold;
+	    text-transform: uppercase;
+	    margin-top: 10px;
+	    color: #3E6A8A;
+    }
+    .lead{
+    	color: #3E6A8A;
+    	text-align: center;
+    	margin-top:16px;
+    }
+    .list-group-image{
+    	height:300px;
+    }
+    </style>
+    
+    
+  </head>
+  <body style="background:url('http://blogs.lexisnexis.co.uk/dr/wp-content/uploads/sites/2/2016/07/51570977_xl.jpg')">
+    <div class="container-custom">
+    
+    	<!-- Header start -->
+    	
+    	{% include 'header.html' %}
+      	
+      	<!-- Header ends -->
+      	
+      	
+      	<div class="row">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="col-md-3" style="margin-top:60px;">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="/buy">
+                        Home
+                    </a>
+                </li>
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Categories
+                    </a>
+                </li>
+                <li>
+                    <a class="cat-nav-click" data-cat="0" href="#">Cars</a>
+                </li>
+                <li>
+                    <a class="cat-nav-click" data-cat="1" href="#">Electronics</a>
+                </li>
+                <li>
+                    <a class="cat-nav-click" data-cat="2" href="#">Free Stuff</a>
+                </li>
+                <li>
+                    <a class="cat-nav-click" data-cat="3" href="#">Sports, Leisure and Games</a>
+                </li>
+                <li>
+                    <a class="cat-nav-click" data-cat="4" href="#">Movies, Books and Music</a>
+                </li>
+                <li>
+                    <a class="cat-nav-click" data-cat="5" href="#">Other</a>
+                </li>
+                <li class="sidebar-brand">
+                    <a href="#">
+                        My Account
+                    </a>
+                </li>
+                <li>
+                    <a href="/transactions">Transactions</a>
+                </li>
+				<li>
+						<a href="/my-account">Account</a>
+					</li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        
+        <div id="products_div" class="col-md-9 col-md-offset-2" style="padding:40px;margin-top:60px;">
+        </div>
+        
+        <div class="row">
+        	<div class="col-md-2 col-md-offset-6">
+        		<button class="view-more button-primary" data-cat="" data-max="0" data-offset="10" style="width: 100px;height:32px; background: #3E6A8A; border-radius: 3px; color: white; font-size: 14px; border: 1px solid #3E6A8A; letter-spacing: 1px; display:none;" type="button">View More</button>
+        	</div>
+        </div>
+      	
+      	
+      	
+      	<div id="buyModal" class="modal fade" role="dialog">
+  			<div class="modal-dialog modal-md">">
+
+		    <!-- Modal content-->
+		    <div class="modal-content" style="padding:20px;">
+		    <div class="modal-header" style="padding:0px;border:none;border-bottom:1px rgba(0, 0, 0, 0.1) solid;">
+          <button style="font-size:22px;" type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+		      <div class="row">
+      		<div class="p_dsc_div" style="line-height:30px;">
+      			<div class="product-container row">
+      				<div class="image-container col-md-7">
+      					<img class="default-img" style="width:320px;" src=""></img>
+      					<div class="row thumb-cont" style="margin-top:20px;margin-left:10px;">
+      					</div>
+      				</div>
+      				<div class="desc-container col-md-5">
+      					<div class="p_name">
+      						<span class="p_name_span"></span>
+      						<br>
+      						<span style="font-size:14px;font-weight:normal">Seller&nbsp;<span style="font-size:14px;font-weight:bold" class="seller_name"></span></span>
+      					</div>
+      					<div class="p_quantity">
+      					</div>
+      					<div class="p_price">
+      						<span class="p_price_span"></span>
+      					</div>
+      					<div class="p_dsc">
+      						<span class="p_dsc_span"></span>
+      					</div>
+      					<div class="buy-button-div">
+      						<button class="p_t_p button-primary" style="height:32px; background: #3E6A8A; border-radius: 3px; color: white; font-size: 14px; border: 1px solid #3E6A8A; letter-spacing: 1px; " type="button">Proceed To Pay</button>
+      					</div>
+      					
+      				</div>
+      			</div>
+      		</div>
+      		
+      		<div class="shipping_div" style="display:none;padding-left:25px;padding-top:25px;font-family:roboto,'sans-serif';font-size:13px;">
+      			<div class="shipping_info row">
+      			
+	      			<div class="col-md-5">
+	      				<label for="form_name">First Name *</label>
+	      				<input id="form_f_name" type="text" name="name" class="form-control" placeholder="Please enter last name *" required="required" data-error="Product name is required.">
+	      			</div>
+	      			
+	      			<div class="col-md-5">
+	      				<label for="form_name">Last Name *</label>
+	      				<input id="form_l_name" type="text" name="name" class="form-control" placeholder="Please enter last name *" required="required" data-error="Product name is required.">
+	      			</div>
+      			
+      			</div>
+      			
+      			
+      			<div class="shipping_info row">
+	      			<div class="col-md-10">
+	      				<label for="form_street">Street Address *</label>
+	      				<input id="form_street" type="text" name="name" class="form-control" placeholder="Please enter street address *" required="required" data-error="Product name is required.">
+	      			</div>
+      			</div>
+      			
+      			<div class="shipping_info row">
+	      			<div class="col-md-5">
+	      				<label for="form_name">Apt/House No *</label>
+	                    <input id="form_apt" type="text" name="name" class="form-control" placeholder="Please enter apt/house no *" required="required" data-error="Product name is required.">
+	                 </div>
+                 
+	                 <div class="col-md-5">
+	                 	<label for="form_name">State *</label>
+						<input id="form_state" type="text" name="name" class="form-control" placeholder="Please enter state *" required="required" data-error="Product name is required.">
+	                 </div> 
+				</div>     
+                 
+                        
+      			<div class="shipping_info row">
+      				<div class="col-md-5">
+      					<label for="form_name">Postal Code *</label>
+                    	<input id="form_pin" type="text" name="name" class="form-control" placeholder="Please enter postal code *" required="required" data-error="Product name is required.">
+                     </div>
+                     <div class="col-md-5">
+                     	<label for="form_name">Country *</label>
+                        <input id="form_country" type="text" name="name" class="form-control" placeholder="Please enter country *" required="required" data-error="Product name is required.">
+      				</div>
+      			</div>
+      			
+      			<div class="buy-button-div">
+      				<button class="back-buy-product button-primary" data-pid="" style="margin-left:33%;width:100px;height:32px; background: #3E6A8A; border-radius: 3px; color: white; font-size: 14px; border: 1px solid #3E6A8A; letter-spacing: 1px; " type="button">Back</button>
+					<button class="buy-product button-primary" data-price="" data-qty="" data-pid="" style="margin-left:10px;width:100px;height:32px; background: #3E6A8A; border-radius: 3px; color: white; font-size: 14px; border: 1px solid #3E6A8A; letter-spacing: 1px; " type="button">Buy</button>
+      			</div>
+      		</div>
+      		
+      	</div>
+
+  			</div>
+		</div>
+      	
+      	
+      	
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{ url_for('static', filename='js/web3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/truffle-contract.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/events.js') }}"></script>
+    
+    <script>
+    $(function() {
+    	$(window).load(function() {
+    		if (typeof web3 !== 'undefined') {
+    		      web3 = new Web3(web3.currentProvider);
+    		    } else {
+    		      // set the provider you want from Web3.providers
+    		      provider = new Web3.providers.HttpProvider('http://localhost:8545');
+    		      web3 = new Web3(provider);
+    		    }
+    		  
+    		  setTimeout(function() { checkInstance(); }, 1000);
+    	  });
+    });
+    </script>
+    
+    <script>
+    	function checkInstance() {
+		   console.log("instance "+App.getInstance());
+    	   if (App.getInstance()!=undefined) {
+			  checkUser();
+    	   }
+    	 }
+
+    	 /* setTimeout(checkInstance, 1000); */
+	</script>
+	
+	<script>
+			function checkUser(){
+				var acc = web3.eth.accounts[0];
+				getUserByAddress(acc,function(res){
+					console.log(res[1]);
+					if (res[2]==""){
+						$(".view-more").hide();
+						alert("Please sign in or sign up");
+						window.location.href="/login";
+					}
+					else{
+						render();
+					}
+				  });
+			}
+		</script>
+    
+    <script>
+    function render(){
+		console.log("ya");
+    	$(".view-more").show();
+		  getTotalProductsCount(function(c){
+			  $(".view-more").attr('data-max',c.toNumber());
+			  getHtmlOfProducts(0,10,"");	
+			  var max = Number($(".view-more").attr('data-max'));
+			  var offset = Number($(".view-more").attr('data-offset'));
+			  console.log(max);
+			  console.log(offset);
+			    if (max <= offset){
+			    	console.log("yes max lessa than  offset");
+				  $(".view-more").hide();
+			    }
+		  });
+		  
+    }
+    </script>
+    
+  </body>
+</html>

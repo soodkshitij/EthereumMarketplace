@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Ethereum Marketplace</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/ethereum/foundation/master/src/favicon.ico">
+
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/app.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/side-bar.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/product.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    .list-group-item-heading{
+	    text-align: center;
+	    font-size: 20px;
+	    font-weight: bold;
+	    text-transform: uppercase;
+	    margin-top: 10px;
+	    color: #3E6A8A;
+    }
+    .lead{
+    	color: #3E6A8A;
+    	text-align: center;
+    	margin-top:16px;
+    }
+    .list-group-image{
+    	height:300px;
+    }
+    </style>
+    
+    
+  </head>
+  <body style="background:url('http://blogs.lexisnexis.co.uk/dr/wp-content/uploads/sites/2/2016/07/51570977_xl.jpg')">
+    <div class="container-custom">
+    
+    	<!-- Header start -->
+    	
+    	{% include 'header.html' %}
+      	
+      	<!-- Header ends -->
+      	
+      	
+      	<div class="row">
+      		<div class="col-md-5 col-md-offset-3"  style="margin-top:100px;line-height:30px;">
+      			<div class="product-container row">
+      				<div class="image-container col-md-5">
+      					<img src="http://res.cloudinary.com/dqum1yaun/image/upload/w_400,h_300,c_fit/jq1c7vdfa1f4fmotv1az"></img>
+      				</div>
+      				<div class="desc-container col-md-7">
+      					<div class="p_name">
+      						<span class="p_name_span">Ford Mustang</span>
+      						<br>
+      						<span style="font-size:14px;font-weight:normal">Seller&nbsp;<span style="font-size:14px;font-weight:bold" class="seller_name">Kshitij Sood</span></span>
+      					</div>
+      					<div class="p_price">
+      						<span class="p_name_span">Price Ξ 1.244</span>
+      					</div>
+      					<div class="p_dsc">
+      						<span class="p_dsc_span">All new ford 2017 mustang for throw away price</span>
+      					</div>
+      					<div class="buy-button-div">
+      						<button class="buy-product button-primary" data-pid="" style="width: 100px;height:32px; background: #3E6A8A; border-radius: 3px; color: white; font-size: 14px; border: 1px solid #3E6A8A; letter-spacing: 1px; " type="button">Buy</button>
+      					</div>
+      					
+      				</div>
+      			</div>
+      		</div>
+      	</div>
+
+        
+      	
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{ url_for('static', filename='js/web3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/truffle-contract.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/events.js') }}"></script>
+    
+    <script>
+    $(function() {
+    	$(window).load(function() {
+    		if (typeof web3 !== 'undefined') {
+    		      web3 = new Web3(web3.currentProvider);
+    		    } else {
+    		      // set the provider you want from Web3.providers
+    		      provider = new Web3.providers.HttpProvider('http://localhost:8545');
+    		      web3 = new Web3(provider);
+    		    }
+    		  
+    		  setTimeout(function() { checkInstance(); }, 1000);
+    	  });
+    });
+    </script>
+    
+    <script>
+    	function checkInstance() {
+		   console.log("instance "+App.getInstance());
+    	   if (App.getInstance()!=undefined) {
+    	       render();
+    	   }
+    	 }
+
+    	 /* setTimeout(checkInstance, 1000); */
+    </script>
+    
+    <script>
+    function render(){
+    	console.log("ya");
+    	$(".view-more").show();
+		  getTotalProductsCount(function(c){
+			  $(".view-more").attr('data-max',c.toNumber());
+			  getHtmlOfProducts(0,10,"");	
+			  var max = Number($(".view-more").attr('data-max'));
+			  var offset = Number($(".view-more").attr('data-offset'));
+			  console.log(max);
+			  console.log(offset);
+			    if (max <= offset){
+			    	console.log("yes max lessa than  offset");
+				  $(".view-more").hide();
+			    }
+		  });
+		  
+    }
+    </script>
+    
+  </body>
+</html>

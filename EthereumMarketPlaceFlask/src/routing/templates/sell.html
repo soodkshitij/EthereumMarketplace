@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Ethereum Marketplace</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/ethereum/foundation/master/src/favicon.ico">
+
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/app.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <style>
+    	#uploadModal {
+    min-width: 600px;
+}
+.upload-file .start {
+    display: none;
+}
+.modal-footer, .modal-header {
+    padding: 10px;
+}
+.modal-header .close {
+    margin-top: 3px;
+}
+ol.upload-files-list {
+    /*border: 1px solid #b9b9b9;*/
+    margin: 0;
+    padding: 0 10px 10px 10px;
+    border-left: none;
+    border-right: none;
+    overflow: hidden;
+}
+ol.upload-files-list .upload-file:last-child {
+    border-bottom: 1px solid #ddd;
+}
+ol.upload-files-list .upload-file.template-download .error-col {
+    float: right;
+``}
+ol.upload-files-list .upload-file.template-upload .error-col {
+    float: left;
+}
+ol.upload-files-list .upload-file.template-upload .filesize-col{
+    float: left;
+    padding-right: 5px;
+    padding-left: 5px;
+    width: 80px;
+}
+ol.upload-files-list .upload-file {
+    list-style: none;
+    position: relative;
+    margin: 0;
+    height: 35px;
+    line-height: 35px;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    vertical-align: bottom;
+}
+ol.upload-files-list .upload-file .upload-file-info {
+    vertical-align: baseline;
+    border-collapse: collapse;
+    /*width: 100%;*/
+    height: 35px;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    right: 10px;
+}
+ol.upload-files-list .upload-file .upload-progress-bar {
+    height: 33px;
+    padding: 0;
+    margin: 0;
+}
+.upload-file.complete .upload-progress-bar {
+    background-color: #ebffd9;
+}
+.upload-file.error .upload-progress-bar {
+    background-color: #FD9F9F;
+}
+.upload-file .upload-progress-bar {
+    border-radius: 0;
+    background-color: #e9f4ff;
+}
+.upload-files-list .upload-file .upload-file-info .filename-col {
+    float: left;
+    width: 310px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.upload-files-list .upload-file .upload-file-info div {
+    display: block;
+}
+.upload-files-list .upload-file .upload-file-info .status-col {
+    float: right;
+    
+}
+.upload-files-list .upload-file .upload-file-info .actions-col {
+    float: right;
+}
+.field-validation-error {
+    color: red;
+}
+.fileupload-buttonbar {
+    padding: 10px;
+}
+#openUpload {
+    /* position: absolute; */
+    top: 50%;
+    left: 50%;
+    margin-left: 35px;
+    width: 150px;
+    margin-top: -25px;
+    height: 50px;
+}   height: 50px;
+}
+.modal-content {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.modal-body {
+    padding: 0;
+}
+.modal-content, .btn {
+    border-radius:0;
+}
+.modal-backdrop {
+    background-color: #fff;
+}
+.modal-footer {
+    margin-top: 0 !important;
+}
+.modal-vertical-centered {
+    transform: translate(0, 50%) !important;
+    -ms-transform: translate(0, 50%) !important;
+    /* IE 9 */
+    -webkit-transform: translate(0, 50%) !important;
+    /* Safari and Chrome */
+}
+#upload {
+    font-family:'PT Sans Narrow', sans-serif;
+    /*background-color: #373a3d;
+            background-image: -webkit-linear-gradient(top, #373a3d, #313437);
+            background-image: -moz-linear-gradient(top, #373a3d, #313437);
+            background-image: linear-gradient(top, #373a3d, #313437);
+            /*width: 250px;*/
+    /*padding: 30px;*/
+    /*border-radius: 3px;*/
+    /*margin: 200px auto 100px;*/
+    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);*/
+    */
+}
+#drop {
+    /*background-color: #2E3134;*/
+    padding: 10px 10px 0px 10px;
+    /*margin-bottom: 30px;*/
+    /*border: 20px solid rgba(0, 0, 0, 0);*/
+    /*border-radius: 3px;*/
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: bold;
+    color: #7f858a;
+}
+#drop a {
+    background-color: #007a96;
+    padding: 12px 26px;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 2px;
+    cursor: pointer;
+    display: block;
+    /*margin-top: 12px;*/
+    line-height: 1;
+}
+#drop a:hover {
+    background-color: #0986a3;
+}
+#drop input {
+    display:none;
+}
+    </style>
+    
+  </head>
+<body style="background:url('http://blogs.lexisnexis.co.uk/dr/wp-content/uploads/sites/2/2016/07/51570977_xl.jpg')">  
+  	<div class="container-custom">
+    
+    	<!-- Header start -->
+    
+      	<div class="header row">
+      		<div class="col-md-4 logo">
+      			<a href="/">Eth MarketPlace</a>
+      		</div>
+      		<div class="col-md-4 right header-option">
+      			<a class="header-option-pad" href="/">Home</a>
+      			<a class="header-option-pad" href="/login">Login</a>
+      			<a class="header-option-pad" href="/buy">Buy</a>
+      			<a class="header-option-pad" href="/sell">Sell</a>
+      		</div>
+      	</div>
+      	
+      	<!-- Header ends -->
+      	
+      	<div class="row">
+      		<form id="contact-form" style="padding:50px;margin-top:40px;">
+
+
+    <div class="controls">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Product Name *</label>
+                    <input id="form_name" type="text" name="name" class="form-control" placeholder="Please enter product name *" required="required" data-error="Product name is required.">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_lastname">Category *</label>
+                    <select class="form-control" id="cat" name="cateogory">
+                    	<option value="0">Cars</option>
+                    	<option value="1">Electronics</option>
+                    	<option value="2">Free Stuff</option>
+                    	<option value="3">Sports, Leisure and Games</option>
+                    	<option value="4">Movies, Books and Music</option>
+                    	<option value="5">Other</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_price">Price (Ether)</label>
+                    <input id="form_price" type="number" name="price" value="0" class="form-control" required="required" data-error="Valid price is required.">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_quantity">Quantity</label>
+                    <input id="form_quantity" type="number" value="1" name="quantity" class="form-control" required="required" data-error="Valid quantity is required.">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="form_message">Description *</label>
+                    <textarea id="form_message" name="message" class="form-control" placeholder="Description of product *" rows="4" required="required" data-error="Please,leave us a message."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+      		
+      	</div>
+      	
+      	
+    </div>
+    
+    <button class="btn btn-primary btn-lg" id="openUpload">Upload Files</button>
+    <button class="btn btn-primary btn-lg" id="post-sell-ad" style="
+    margin-left: 40px;
+    margin-top: -25px;
+    width: 150px;
+    background-color: #4cae4c;
+    border: none;
+">Post</button>
+</form>
+<div class="modal" id="uploadModal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" style="overflow: hidden">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                 <h4 class="modal-title" id="myModalLabel">Add new file</h4>
+
+            </div>
+            <div class="modal-body" id="modal-body">
+                <div id="upload">
+                    <div id="drop">Drop files here<a>Browse</a>
+
+                        <input type="file" name="upl" multiple="multiple" />
+                    </div>
+                    <div class="fileupload-buttonbar">
+                        <div>
+                            <button type="submit" class="btn btn-success start"> <i class="glyphicon glyphicon-upload"></i><span>Start upload</span>
+
+                            </button>
+                            <button type="reset" class="btn btn-warning cancel"> <i class="glyphicon glyphicon-upload"></i><span>Clear upload</span>
+
+                            </button>
+                            <button type="reset" class="btn btn-danger cancel"> <i class="glyphicon glyphicon-ban-circle"></i><span>Cancel All</span>
+
+                            </button>
+                        </div>
+                    </div>
+                    <!-- The table listing the files available for upload/download -->
+                    <!--<table class="table table-striped">
+                        <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+                    </table>-->
+                    <ol class="files upload-files-list"></ol>
+                    <!--files go here-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" value="" id="uploaded-public-keys"></input>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{ url_for('static', filename='js/web3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/truffle-contract.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/events.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bignumber.js') }}"></script>
+    <script src="http://blueimp.github.io/jQuery-File-Upload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="http://blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload.js"></script>
+    <script src="http://blueimp.github.io/jQuery-File-Upload/js/jquery.iframe-transport.js"></script>	
+    <script src="http://cdn.jsdelivr.net/jquery.knob/1.2.2/jquery.knob.js"></script>
+    <script src="http://blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-process.js"></script>	
+    <script src="http://blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-validate.js"></script>	
+    <script src="http://blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-ui.js	"></script>	
+    <script src="{{ url_for('static', filename='js/dialog.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-notify.min.js') }}"></script>
+    
+    
+    
+    
+
+<script>
+        $(function() {
+            $(window).load(function() {
+                // if (typeof web3 !== 'undefined') {
+                //       web3 = new Web3(web3.currentProvider);
+                //     } else {
+                //       // set the provider you want from Web3.providers
+                //       provider = new Web3.providers.HttpProvider('http://localhost:8545');
+                //       web3 = new Web3(provider);
+                //     }
+                  
+                  setTimeout(function() { checkInstance(); }, 1000);
+              });
+        });
+        </script>
+        
+        <script>
+            function checkInstance() {
+               console.log("instance "+App.getInstance());
+               if (App.getInstance()!=undefined) {
+                   render();
+               }
+             }
+        </script>
+        
+        <script>
+        function render(){
+            var acc = web3.eth.accounts[0];
+            getUserByAddress(acc,function(res){
+                console.log(res[1]);
+                if (res[2]==""){
+                    alert("Please sign in or sign up");
+                    window.location.href="/login";
+                }
+              });
+            }
+        </script>
+    
+  </body>
+</html>

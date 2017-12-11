@@ -1,0 +1,117 @@
+@font-face {
+  font-family: 'NinjaTurtles-Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('NinjaTurtles-Regular'), url('/static/fonts/NinjaTurtles-Regular.otf') format('truetype');
+}
+
+body{
+	font-family: 'Roboto', sans-serif;
+}
+
+.header{
+	background-color:#3E6A8A;
+	color:white;
+	height:60px;
+	padding:0px;
+	margin:0px;
+	position: fixed;
+    width: 100%;
+    z-index: 1002;
+}
+
+.container-custom{
+	width:100%;
+}
+
+
+.logo{
+	font-family:'NinjaTurtles-Regular';
+	margin-top:10px;
+	margin-left:20px;
+}
+
+.logo > a{
+	color:white;
+	font-size:30px;
+}
+
+.right{
+	float:right;
+}
+
+.header-option{
+	margin-top:20px;
+}
+
+.header-option-pad{
+	margin-right:25px;
+	font-size:18px;
+	font-family: 'Roboto', sans-serif;
+	color:white;
+	letter-spacing:2px;
+}
+
+a:hover{
+	color:white;
+	text-decoration:none;
+}
+
+.ethereum-middle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top:50px;
+}
+
+.transactions{
+	cursor: pointer;
+    padding: 5px;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 4px;
+    font-family: roboto;
+	color: #3E6A8A;
+	text-align: center;
+	border-top:none;
+}
+
+.transaction-row{
+	text-align: center;
+	padding: 20px;
+	border-bottom: 1px solid #ddd;
+	margin: 0px;
+}
+
+.dummy-row{
+	margin-bottom: 14px;
+}
+
+.total-row{
+	border-top: 1px solid #ddd;
+}
+
+.order-button{
+	height: 32px;
+    background: #3E6A8A;
+    border-radius: 3px;
+    color: white;
+    font-size: 14px;
+    border: 1px solid #3E6A8A;
+	letter-spacing: 1px;
+	margin-top:15px;
+}
+
+.seller-info{
+	margin-top:20px;
+	font-size: 14px;
+	font-family: roboto;
+	line-height: 30px;
+
+}
+
+
+.selected-transaction-tab{
+	background-color: #3E6A8A;
+	color:white;
+}

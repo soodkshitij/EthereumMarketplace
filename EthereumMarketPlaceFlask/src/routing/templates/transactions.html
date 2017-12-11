@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Ethereum Marketplace</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/ethereum/foundation/master/src/favicon.ico">
+
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/app.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/side-bar.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/product.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+  <body style="background:url('http://blogs.lexisnexis.co.uk/dr/wp-content/uploads/sites/2/2016/07/51570977_xl.jpg')">
+    <div class="container-custom">
+    
+    	<!-- Header start -->
+    	
+    	{% include 'header.html' %}
+      	
+      	<!-- Header ends -->
+      	
+      	
+      	<div class="row">
+                <h3 style="margin-top: 100px;text-align:center;margin-bottom:30px;">Transaction History</h3>
+                <div class="switch-header col-md-8 col-md-offset-2" style="cursor:pointer;padding:5px;border: 1px solid #ddd;/* padding: 10px; */background-color: white;height: 40px;border-radius: 4px;font-family: roboto;color: #3E6A8A;">
+                    <div class="row" style="
+                height: 100%;margin:0px;
+            ">
+                        <div class="col-md-6 selected-transaction-tab s-tab" style="
+                text-align: center;
+                font-size: 18px;
+                border-right: 1px solid #ddd;
+                height: 100%;
+            ">
+                                    <span>SOLD</span>
+                                </div>
+                        <div class="col-md-6 b-tab" style="
+                text-align: center;
+                font-size: 18px;
+            ">
+            <span>BOUGHT</span>
+                                </div>
+                    </div>
+                </div>
+
+                <div id="sold-transactions" class="transactions col-md-8 col-md-offset-2">
+                </div>
+                <div id="bought-transactions" style="display:none;" class="transactions col-md-8 col-md-offset-2">
+                </div>
+                    
+            </div>
+
+
+            <div class="modal" id="transactionModal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" style="overflow: hidden">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                 <h4 class="modal-title" id="myModalLabel">Shipment Details</h4>
+                
+                            </div>
+                            <div class="modal-body" id="modal-body">
+                                <h4 class="modal-transactionModal t_id"></h4>
+                                <h4 class="modal-transactionModal f_name"></h4>
+                                <h4 class="modal-transactionModal order-date">Wed Dec 06 2017</h4>
+                                <h4 class="modal-transactionModal address"></h4>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+      	
+      	
+      	
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{ url_for('static', filename='js/web3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/truffle-contract.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/events.js') }}"></script>
+    
+    <script>
+    $(function() {
+    	$(window).load(function() {
+    		// if (typeof web3 !== 'undefined') {
+    		//       web3 = new Web3(web3.currentProvider);
+    		//     } else {
+    		//       // set the provider you want from Web3.providers
+    		//       provider = new Web3.providers.HttpProvider('http://localhost:8545');
+    		//       web3 = new Web3(provider);
+    		//     }
+    		  
+    		  setTimeout(function() { checkInstance(); }, 1000);
+    	  });
+    });
+    </script>
+    
+    <script>
+    	function checkInstance() {
+		   console.log("instance "+App.getInstance());
+    	   if (App.getInstance()!=undefined) {
+               checkUser();
+    	   }
+    	 }
+    </script>
+    
+    <script>
+        function checkUser(){
+            var acc = web3.eth.accounts[0];
+		    getUserByAddress(acc,function(res){
+                console.log(res[1]);
+                if (res[2]==""){
+					$(".view-more").hide();
+                    alert("Please sign in or sign up");
+                    window.location.href="/login";
+                }
+                else{
+                    render();
+                }
+              });
+        }
+    </script>
+
+    <script>
+    function render(){
+        populateTransactions();
+    }
+    </script>
+    
+  </body>
+</html>
